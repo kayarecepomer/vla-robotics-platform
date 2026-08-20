@@ -1,0 +1,159 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2.2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape Kaya Omer} \\ \vspace{1pt}
+    \small 647-574-3576 $|$
+    \href{mailto:kaya.kaya@mail.utoronto.ca}{\underline{kaya.kaya@mail.utoronto.ca}} $|$
+    \href{https://linkedin.com/in/kayakaya/}{\underline{linkedin}} $|$
+    \href{https://github.com/kayarecepomer}{\underline{github}} $|$
+    \href{https://kayakayakaya.com}{\underline{Personal Website}} $|$
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education \& Awards}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University of Toronto}{Toronto, ON}
+      {Bachelor of Science in Computer Science, Focus in Artificial Intelligence (Expected Graduation: May 2027)}{Sep. 2023 -- May 2027}
+    \resumeSubheading
+      {President's Scholar of Excellence}{Associated with University of Toronto}
+      {Awarded to the most highly qualified undergraduate students.}{March 2023}
+    \resumeSubheading
+      {Janet Faulds and M. Ann Marshall Family Award.}{St. Michael's College at University of Toronto}
+      {Awarded to the qualified students at St Michael's College.}{Nov 2023}
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {AI Researcher Intern}{May 2026 -- Present}
+      {\textbf{\textit{The Matter Lab}}}{Toronto, ON}
+    \resumeItemListStart
+      \resumeItem{Engineering specialized AI agents for \textbf{quantum chemistry} workflows using \textbf{PySCF} and \textbf{ORCA} to automate electronic structure calculations, molecular property computation, and API interfacing.}
+      \resumeItem{Architecting autonomous LLM-driven scientific discovery pipelines ("\textbf{El Agente}"), building agentic workflows that orchestrate quantum chemistry tools, external APIs, and data retrieval systems.}
+      \resumeItem{Developing an AI-native framework integrating LLM-based agents with internal web interfaces, enabling automated execution of complex computational chemistry protocols.}
+    \resumeItemListEnd
+
+        \resumeSubheading
+      {Machine Learning Research Assistant}{April 2026 -- August 2026}
+      {\textbf{\textit{CECCS}}}{Toronto, ON}
+    \resumeItemListStart
+      \resumeItem{Modernized legacy ML classification pipeline using \textbf{Python}, \textbf{scikit-learn}, and \textbf{NLP} (word2vec, embeddings), retraining \textbf{Random Forest} models to fix silent feature-loss bugs.}
+      \resumeItem{Architected fault-tolerant, automated \textbf{LLM evaluation \& inference pipelines} featuring structured output enforcement (JSON schema), exponential back-off, and cross-model agreement validation, reducing target false positives by 4x.}
+      \resumeItem{Engineered \textbf{ETL pipelines} (\textbf{Pandas}, \textbf{Polars}) to process and deduplicate 20,000+ raw records; applied \textbf{statistical calibration} to optimize model thresholds and cut over-matching errors.}
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {Software Engineer Intern}{Jan 2026 -- April 2026}
+      {\textbf{\textit{CIBC}}}{Toronto, ON}
+    \resumeItemListStart
+      \resumeItem{Engineered internal AI integrations to automate workflows; built distributed data pipelines using Python, Apache Spark, and Databricks to process large-scale financial data.}
+    \resumeItem{Implemented MLOps workflows and version-controlled CI/CD pipelines (Git, Azure DevOps, Azure AI Studio, Azure ML) for automated model deployment.}
+    \resumeItemListEnd
+
+
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+        {\textbf{SO-101 Dual-Arm Robotics Research Platform} $|$ \emph{Python, PyTorch, CUDA, Isaac Sim, ZeroMQ}}{Aug 2026 -- Present}
+        \resumeItemListStart
+          \resumeItem{Architected a distributed, cross-platform robotics system linking a macOS hardware-control node (PyTorch-based control stack) to a Windows GPU/simulation node via a custom low-latency ZeroMQ telemetry bridge with typed dataclass message schemas.}
+          \resumeItem{Deployed and validated an NVIDIA Isaac Sim (CUDA-accelerated) digital-twin environment on RTX hardware, building a modular Python 3.12 codebase for GPU-based simulation and future domain-randomized synthetic data generation.}
+          \resumeItem{Implemented real-time 60Hz teleoperation and structured demonstration-data recording (NumPy-backed proprioceptive streams) for a calibrated 6-DOF dual-arm manipulator, using Git for version control across the distributed codebase.}
+        \resumeItemListEnd
+      \resumeProjectHeading
+        {\textbf{Quantum Chemistry Agent Pipeline} $|$ \emph{Python, PySCF, ORCA, LLMs}}{May 2026}
+        \resumeItemListStart
+          \resumeItem{Built LLM-driven agentic workflows to automate quantum-chemistry calculations via PySCF and ORCA, orchestrating multi-step electronic structure computations with tool-use and automated error handling.}
+        \resumeItemListEnd
+      \resumeProjectHeading
+        {\textbf{3D Reconstruction \& Automation Pipeline for SDL} $|$ \emph{Python, OpenCV, NumPy, SciPy, RPi}}{Sep 2025}
+        \resumeItemListStart
+          \resumeItem{Engineered a CV pipeline for a Self-Driving Lab combining SfM-based 3D reconstruction (NumPy/SciPy optimization) with automated robotic scanning for closed-loop material quality assessment.}
+        \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+%-----------SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, C/C++, Java, SQL, Swift, JavaScript, HTML/CSS, R, Assembly} \\
+     \textbf{Frameworks}{: PyTorch, TensorFlow, React, Flask, FastAPI} \\
+     \textbf{Developer Tools}{: Git, Docker, CUDA, GCP, Azure AI Studio, Databricks, Linux} \\
+     \textbf{Libraries}{: PySCF, SciPy, OpenCV, pandas, NumPy, Matplotlib, ORCA} \\
+     \textbf{Robotics \& Simulation}{: NVIDIA Isaac Sim, GPU-Accelerated Simulation, ZeroMQ, Real-Time Telemetry} \\
+     \textbf{AI/ML}{: LLM Agents, Agentic Workflows, Distributed Systems, Quantum Chemistry Automation, MLOps, Computer Vision}
+    }}
+ \end{itemize}
+
+\end{document}
