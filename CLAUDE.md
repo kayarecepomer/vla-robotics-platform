@@ -30,13 +30,21 @@ Windows/simulation half of a two-machine SO-101 dual-arm robotics research platf
   - Isaac Sim is currently running via that repo's `scripts\run_isaac_sim.ps1` (which passes `--ext-folder`/`--enable` to load `isaac.sim.mcp_extension`), with `ISAACSIM_ROOT=C:\Users\recep\isaacsim\_build\windows-x86_64\release`. Extension confirmed listening on `127.0.0.1:8766`.
   - `.mcp.json` at this repo's root registers the `isaac-sim` MCP server for Claude Code (runs `isaacsim-mcp-server\scripts\run_mcp_server.ps1`). **Not committed yet** — it hardcodes an absolute machine-specific path; ask the user whether to commit it or gitignore it.
   - **MCP servers load at session start, so a session started before this file existed won't have the `isaac-sim` tools.** If you don't see Isaac Sim MCP tools available, tell the user to reload/restart the Claude Code window.
+  - Confirmed working end-to-end 2026-09-18: `get_scene_info` pongs, and the tools can build a scene (see below).
+- **SO-101 dual-arm scene** (built 2026-09-18 via MCP tools, not a hand-written import script):
+  - The Isaac Sim 6.0 asset library ships a ready-made SO-101 asset — no URDF conversion needed. `list_available_robots` returns it as robot key `so101_new_calib` (also `so100` for the older revision), asset path `/Isaac/Robots/RobotStudio/so101_new_calib/so101_new_calib.usd`.
+  - Physics scene created at `/World/PhysicsScene` with ground plane at `/World/groundPlane`.
+  - Two arms loaded: `/World/SO101_Left` at (-0.2, 0, 0) and `/World/SO101_Right` at (0.2, 0, 0) — 0.4m apart, arbitrary placeholder spacing (no real-hardware baseline spec exists to match against; adjust freely).
+  - Both report 6 DOF with joint names matching the real hardware exactly: `shoulder_pan, shoulder_lift, elbow_flex, wrist_flex, wrist_roll, gripper`.
+  - Joint limits (radians, from the generic asset) were sanity-checked against the handover doc's per-unit calibrated servo tick ranges (§ calibration) — total range-of-motion per joint matches within ~5-15% across both arms, confirming the right asset loaded correctly. The sim asset's limits are the generic SO-101 spec, not this unit's individual calibration offsets — that per-unit tick-to-radian mapping still needs to happen in the bridge (see subscriber.py item below), not in the sim asset itself.
+  - `/World/CheckCam` was added as a verification camera to screenshot the scene. Per the MCP tool's own warning, the first RTX camera created in an Isaac Sim session can't be fully removed later (`delete_object` reports success but it comes back) — it's harmless and just stays on the stage.
 - **Resume side-quest** (unrelated to the robotics work, lives in `resume/`): two NVIDIA internship resumes (`resume_nvidia_swe.tex`, `resume_nvidia_dlca.tex`) tailored from the user's base resume, swapping in the SO-101 project. Repo is confirmed **private** by the user, which is why these (with phone/email) were pushed. Don't assume this is public-facing content like the README/media.
 - **README.md** rewritten as a project showcase for a hiring-manager audience: build photos in `media/` (GPS EXIF stripped before commit), architecture diagram, status checklist, tech stack, future-work section (sim-to-real, VR teleoperation, agentic planning layer).
 
 ## Not done yet / open threads
 
-- `sim/load_so101.py` doesn't exist yet — the SO-101 URDF/USD asset still needs to be found or converted and imported into Isaac Sim. This was the planned next step before the MCP detour; with the MCP server now available, this is a good candidate to do *through* the MCP tools instead of hand-written Isaac Sim API scripts.
-- `bridge/windows/subscriber.py` only logs — not yet wired to actually move the Isaac Sim twin.
+- `sim/load_so101.py` still doesn't exist as a file — the dual-arm scene was built live through MCP tool calls (see above), not saved as a script. If the scene needs to be reproducible/reloadable without replaying MCP calls, someone should either save the stage as a `.usd` file or write a setup script that issues the same MCP calls (or equivalent Isaac Sim API calls).
+- `bridge/windows/subscriber.py` only logs — not yet wired to actually move the Isaac Sim twin. This now also needs a per-unit calibration mapping step (raw Feetech servo ticks → sim radians) since the sim asset's joint limits are generic, not this unit's calibrated ranges — see the calibration values in the handover doc §.
 - Live end-to-end bridge test (real leader arm on Mac → Isaac Sim twin on Windows) has never been run — needs a Mac-side session to run `bridge/mac/publisher.py` and this machine to be listening.
 - Phase 2 from the original plan (validating teleop + dataset recording on the Mac) was never executed from this session — it can't be, this session only has Windows access. Whoever picks this up on the Mac side should run the `lerobot_teleoperate.py` command documented in the handover doc §4.1.
 - Repo was renamed on GitHub from `robot-sim-soarm101` to `vla-robotics-platform` (the old name read too much like a copy of the open-source SO-ARM101 project). The local clone directory is still named `robot-sim-soarm101` on disk — only the GitHub remote changed.
@@ -44,4 +52,7 @@ Windows/simulation half of a two-machine SO-101 dual-arm robotics research platf
 
 ## Suggested next step
 
-Reload the Claude Code session so the `isaac-sim` MCP tools activate, confirm they're available (e.g. ask it to list objects in the current Isaac Sim stage), then use them to import/build the SO-101 arm in the scene rather than hand-writing the asset-import script from scratch.
+The dual-arm scene exists in the running Isaac Sim session but isn't yet persisted as a file or reproducible script. Next candidates, in rough order:
+1. Decide how the scene should persist (save stage to `.usd`, or write a setup script) so it survives an Isaac Sim restart.
+2. Build the per-unit calibration mapping (servo ticks ↔ sim radians) needed before `bridge/windows/subscriber.py` can actually drive the twin from real joint state.
+3. Wire `bridge/windows/subscriber.py` to call `set_joint_positions` via the MCP tools (or the Isaac Sim Python API) instead of just logging.
