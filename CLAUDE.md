@@ -39,7 +39,7 @@ Windows/simulation half of a two-machine SO-101 dual-arm robotics research platf
 - `bridge/windows/subscriber.py` only logs — not yet wired to actually move the Isaac Sim twin.
 - Live end-to-end bridge test (real leader arm on Mac → Isaac Sim twin on Windows) has never been run — needs a Mac-side session to run `bridge/mac/publisher.py` and this machine to be listening.
 - Phase 2 from the original plan (validating teleop + dataset recording on the Mac) was never executed from this session — it can't be, this session only has Windows access. Whoever picks this up on the Mac side should run the `lerobot_teleoperate.py` command documented in the handover doc §4.1.
-- Repo rename was discussed (current GitHub name `robot-sim-soarm101` felt too close to a copy of the open-source SO-ARM101 project) but never finalized — no name was picked yet.
+- Repo was renamed on GitHub from `robot-sim-soarm101` to `vla-robotics-platform` (the old name read too much like a copy of the open-source SO-ARM101 project). The local clone directory is still named `robot-sim-soarm101` on disk — only the GitHub remote changed.
 - Full original phased plan (if useful for context on sequencing decisions): `C:\Users\recep\.claude\plans\resilient-scribbling-origami.md` (local to this machine, not in the repo).
 
 ## Suggested next step
