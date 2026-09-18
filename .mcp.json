@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "isaac-sim": {
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\recep\\isaacsim-mcp-server\\scripts\\run_mcp_server.ps1"
+      ]
+    }
+  }
+}
