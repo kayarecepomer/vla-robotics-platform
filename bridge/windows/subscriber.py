@@ -1,14 +1,11 @@
 from __future__ import annotations
 
 import argparse
-import sys
-from pathlib import Path
-from typing import Callable
+from collections.abc import Callable
 
 import zmq
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from joint_state import TOPIC, JointState
+from bridge.joint_state import TOPIC, JointState
 
 CONNECT_ADDRESS = "tcp://localhost:5555"
 

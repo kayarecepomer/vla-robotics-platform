@@ -1,0 +1,5 @@
+# macOS hardware node: install into the existing `lerobot` conda env (LeRobot 0.6.x editable install).
+#   pip install -r requirements/mac.txt && pip install -e .
+pyzmq>=25
+opencv-python
+numpy

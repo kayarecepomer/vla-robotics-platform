@@ -1,14 +1,11 @@
 from __future__ import annotations
 
 import math
-import sys
 import time
-from pathlib import Path
 
 import zmq
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "bridge"))
-from joint_state import JOINT_NAMES, TOPIC, JointState
+from bridge.joint_state import JOINT_NAMES, TOPIC, JointState
 
 BIND_ADDRESS = "tcp://127.0.0.1:5555"
 RATE_HZ = 30.0
@@ -25,7 +22,8 @@ def run(bind_address: str, rate_hz: float) -> None:
     try:
         while True:
             phase = tick * 0.05
-            positions = {name: 100.0 * math.sin(phase + index) for index, name in enumerate(JOINT_NAMES)}
+            positions = {name: 40.0 * math.sin(phase + index) for index, name in enumerate(JOINT_NAMES)}
+            positions["gripper"] = 50.0 + 50.0 * math.sin(phase)
             state = JointState.from_positions(positions)
             socket.send_multipart([TOPIC, state.encode()])
             tick += 1
