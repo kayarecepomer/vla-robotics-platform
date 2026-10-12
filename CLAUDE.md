@@ -43,16 +43,23 @@ Windows/simulation half of a two-machine SO-101 dual-arm robotics research platf
 
 ## Not done yet / open threads
 
-- `sim/load_so101.py` still doesn't exist as a file — the dual-arm scene was built live through MCP tool calls (see above), not saved as a script. If the scene needs to be reproducible/reloadable without replaying MCP calls, someone should either save the stage as a `.usd` file or write a setup script that issues the same MCP calls (or equivalent Isaac Sim API calls).
-- `bridge/windows/subscriber.py` only logs — not yet wired to actually move the Isaac Sim twin. This now also needs a per-unit calibration mapping step (raw Feetech servo ticks → sim radians) since the sim asset's joint limits are generic, not this unit's calibrated ranges — see the calibration values in the handover doc §.
+- The scene is now scripted in `sim/so101_scene.py` (see below) but that script has not been run yet.
+- `bridge/windows/subscriber.py` still only logs; the twin is driven by `sim/mirror.py` with the mapping in `config/so101_twin_mapping.json`, whose signs/offsets still need checking against the real arm.
 - Live end-to-end bridge test (real leader arm on Mac → Isaac Sim twin on Windows) has never been run — needs a Mac-side session to run `bridge/mac/publisher.py` and this machine to be listening.
 - Phase 2 from the original plan (validating teleop + dataset recording on the Mac) was never executed from this session — it can't be, this session only has Windows access. Whoever picks this up on the Mac side should run the `lerobot_teleoperate.py` command documented in the handover doc §4.1.
 - Repo was renamed on GitHub from `robot-sim-soarm101` to `vla-robotics-platform` (the old name read too much like a copy of the open-source SO-ARM101 project). The local clone directory is still named `robot-sim-soarm101` on disk — only the GitHub remote changed.
 - Full original phased plan (if useful for context on sequencing decisions): `C:\Users\recep\.claude\plans\resilient-scribbling-origami.md` (local to this machine, not in the repo).
 
+## Added 2026-10-12: Tier A + B tooling (written in a cloud session, not yet run on hardware)
+
+- Python packages `bridge` and `vla` (install with `pip install -e .`); run scripts as modules from the repo root, e.g. `python -m bridge.windows.policy_server`. Old `sys.path` hacks are gone.
+- Everything is in degrees now: the publisher, recorder (`--robot.use_degrees=true`) and policy client build LeRobot devices with `use_degrees=True` through `bridge/lerobot_compat.py`, which looks up `so101_follower` / `so101_leader` by registered type name to survive LeRobot module moves.
+- `sim/so101_scene.py` rebuilds the scene from code (and `--save` writes a .usd); `sim/mirror.py` drives the twin live or from a replay .npz. Both use the `isaacsim.core.api` APIs and have not been run against 6.0 yet.
+- Remote policy: `bridge/windows/policy_server.py` + `bridge/mac/policy_client.py` (REQ/REP on 5556, JPEG frames, action chunks).
+- `vla/eval/` real-robot protocol, `vla/study/` + `vla/encoders/` frozen-encoder study (SigLIP 2 / DINOv2 / CAIP, OWLv2+SAM mask pooling), `vla/dagger.py`.
+- Tests (`pytest -q`) use fakes for robots and encoders; CI in `.github/workflows/ci.yml`.
+- Runbook: `docs/RUNBOOK.md`. Study design: `docs/ENCODER_STUDY.md`.
+
 ## Suggested next step
 
-The dual-arm scene exists in the running Isaac Sim session but isn't yet persisted as a file or reproducible script. Next candidates, in rough order:
-1. Decide how the scene should persist (save stage to `.usd`, or write a setup script) so it survives an Isaac Sim restart.
-2. Build the per-unit calibration mapping (servo ticks ↔ sim radians) needed before `bridge/windows/subscriber.py` can actually drive the twin from real joint state.
-3. Wire `bridge/windows/subscriber.py` to call `set_joint_positions` via the MCP tools (or the Isaac Sim Python API) instead of just logging.
+Follow `docs/RUNBOOK.md` in order: mount cameras, record the first dataset, run the `hold` policy latency check, then train and evaluate baselines. Fix anything the first hardware and Isaac Sim runs turn up in the new scripts.
