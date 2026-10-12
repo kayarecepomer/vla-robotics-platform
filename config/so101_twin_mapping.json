@@ -1,0 +1,11 @@
+{
+  "_comment": "Maps calibrated LeRobot joint readings (use_degrees=True: degrees from the middle of each calibrated range; gripper 0-100) to Isaac Sim so101_new_calib joint radians. Flip a sign or add an offset if a twin joint moves the wrong way or sits off by a constant angle.",
+  "joints": {
+    "shoulder_pan":  {"mode": "degrees", "sign": 1.0, "offset_rad": 0.0},
+    "shoulder_lift": {"mode": "degrees", "sign": 1.0, "offset_rad": 0.0},
+    "elbow_flex":    {"mode": "degrees", "sign": 1.0, "offset_rad": 0.0},
+    "wrist_flex":    {"mode": "degrees", "sign": 1.0, "offset_rad": 0.0},
+    "wrist_roll":    {"mode": "degrees", "sign": 1.0, "offset_rad": 0.0},
+    "gripper":       {"mode": "percent", "closed_rad": 0.0, "open_rad": 1.6}
+  }
+}

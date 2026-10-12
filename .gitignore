@@ -24,3 +24,9 @@ datasets/
 
 .DS_Store
 Thumbs.db
+
+# Training and study outputs
+outputs/
+features/
+wandb/
+*.npz

@@ -1,0 +1,10 @@
+# Windows GPU node (policy server, training, encoder study). Install CUDA PyTorch first:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+#   pip install -r requirements/windows.txt && pip install -e .
+# The sim scripts run with Isaac Sim's own python.bat instead (it already has pyzmq).
+lerobot[smolvla]
+transformers>=4.50
+pillow
+opencv-python
+pyzmq>=25
+numpy

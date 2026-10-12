@@ -1,0 +1,27 @@
+[project]
+name = "vla-robotics-platform"
+version = "0.1.0"
+description = "SO-101 real-to-sim robot learning platform: ZeroMQ bridge, Isaac Sim twin, policy evaluation and a frozen-encoder study"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pyzmq"]
+
+[project.optional-dependencies]
+learning = ["torch", "transformers>=4.50", "pillow"]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["bridge*", "vla*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["B905", "UP037", "E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bridge", "vla"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
