@@ -1,5 +1,12 @@
 # SO-101 Real-to-Sim Robot Learning Platform
 
+| | |
+|---|---|
+| ![3D printing the arm's structural parts on a Bambu Lab A1](media/3d_printing_arm_parts.jpg) | ![Partial assembly: servos, wiring, and driver board on the desk](media/partial_assembly_desk.jpg) |
+| Structural links printed in-house on a Bambu Lab A1 | Partial assembly: Feetech STS3215 servos, wiring harness, driver board |
+| ![Close-up of a joint assembly with driver board](media/joint_assembly_closeup.jpg) | ![Assembled arm on the workbench](media/assembled_arm_bench.jpg) |
+| Joint-level detail: servo horns, cabling, control board | Assembled arm, calibrated and teleoperated through LeRobot |
+
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 ![Hugging Face LeRobot](https://img.shields.io/badge/LeRobot-0.6-FFD21E?logo=huggingface&logoColor=black)
@@ -70,14 +77,7 @@ Real-robot success rates with 95% Wilson intervals, 16 placements on a fixed 4×
 
 Step-by-step commands for both machines: [docs/RUNBOOK.md](docs/RUNBOOK.md).
 
-## Hardware build
-
-| | |
-|---|---|
-| ![3D printing the arm's structural parts on a Bambu Lab A1](media/3d_printing_arm_parts.jpg) | ![Partial assembly: servos, wiring, and driver board on the desk](media/partial_assembly_desk.jpg) |
-| Structural links printed in-house on a Bambu Lab A1 | Partial assembly: Feetech STS3215 servos, wiring harness, driver board |
-| ![Close-up of a joint assembly with driver board](media/joint_assembly_closeup.jpg) | ![Assembled arm on the workbench](media/assembled_arm_bench.jpg) |
-| Joint-level detail: servo horns, cabling, control board | Assembled arm, calibrated and teleoperated through LeRobot |
+## Hardware
 
 One leader and one follower arm (6× STS3215 each), calibrated with `lerobot-calibrate`. Isaac Sim 6.0 is built from source on an RTX 5070 (12 GB). Full specs and calibration values: [SO101_System_Architecture_Handover.md](SO101_System_Architecture_Handover.md).
 
